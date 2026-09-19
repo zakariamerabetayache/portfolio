@@ -1,0 +1,106 @@
+/* ===== FOOTER ===== */
+.footer {
+    border-top: 1px solid var(--clr-border);
+    padding: var(--sp-3xl) 0 var(--sp-xl);
+    background: var(--clr-bg-secondary);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--sp-3xl);
+    margin-bottom: var(--sp-3xl);
+}
+
+.footer-brand p {
+    color: var(--clr-text-secondary);
+    font-size: var(--fs-sm);
+    margin-top: var(--sp-md);
+    max-width: 300px;
+    line-height: 1.7;
+}
+
+.footer-col h4 {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--clr-text-muted);
+    margin-bottom: var(--sp-lg);
+}
+
+.footer-col a {
+    display: block;
+    font-size: var(--fs-sm);
+    color: var(--clr-text-secondary);
+    margin-bottom: var(--sp-sm);
+    transition: color var(--transition-fast);
+}
+
+.footer-col a:hover {
+    color: var(--clr-accent-light);
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--sp-xl);
+    border-top: 1px solid var(--clr-border);
+}
+
+.footer-bottom p {
+    font-size: var(--fs-xs);
+    color: var(--clr-text-muted);
+}
+
+.footer-socials {
+    display: flex;
+    gap: var(--sp-md);
+}
+
+.footer-socials a {
+    color: var(--clr-text-muted);
+    transition: color var(--transition-fast);
+}
+
+.footer-socials a:hover {
+    color: var(--clr-accent-light);
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--sp-xl);
+    }
+
+    .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: var(--sp-md);
+        text-align: center;
+    }
+}
+
+/* RTL Support */
+[dir="rtl"] .footer {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="rtl"] .footer-brand p {
+    margin-inline-start: 0;
+}
+
+[dir="rtl"] .footer-bottom {
+    flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+    [dir="rtl"] .footer-bottom {
+        flex-direction: column;
+    }
+}

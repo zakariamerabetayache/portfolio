@@ -1,0 +1,211 @@
+/* ===== PRODUCTS PAGE ===== */
+.products-hero {
+    padding-top: calc(var(--nav-height) + var(--sp-4xl));
+    padding-bottom: var(--sp-3xl);
+    text-align: center;
+    position: relative;
+}
+
+.products-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: var(--gradient-hero);
+    pointer-events: none;
+}
+
+.products-hero h1,
+.products-hero p {
+    position: relative;
+}
+
+.products-hero h1 {
+    font-size: var(--fs-4xl);
+    max-width: 700px;
+    margin: 0 auto var(--sp-md);
+}
+
+.products-hero p {
+    font-size: var(--fs-md);
+    color: var(--clr-text-secondary);
+    max-width: 550px;
+    margin: 0 auto var(--sp-xl);
+}
+
+.products-hero-actions {
+    display: flex;
+    gap: var(--sp-md);
+    justify-content: center;
+    position: relative;
+}
+
+/* Screenshots */
+.screenshots-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-md);
+    margin-top: var(--sp-2xl);
+}
+
+.screenshot-item {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--clr-border);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+}
+
+.screenshot-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow);
+    border-color: rgba(108, 92, 231, 0.3);
+}
+
+.screenshot-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.screenshot-item p {
+    padding: var(--sp-sm) var(--sp-md);
+    font-size: var(--fs-xs);
+    color: var(--clr-text-muted);
+    background: var(--clr-bg-card);
+    text-align: center;
+}
+
+/* Features list */
+.features-section {
+    background: var(--clr-bg-secondary);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-xl);
+    margin-top: var(--sp-2xl);
+}
+
+.feature-card {
+    padding: var(--sp-xl);
+}
+
+.feature-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--sp-md);
+    background: var(--clr-accent-glow);
+    color: var(--clr-accent-light);
+}
+
+.feature-card h4 {
+    font-size: var(--fs-base);
+    margin-bottom: var(--sp-xs);
+}
+
+.feature-card p {
+    font-size: var(--fs-sm);
+    color: var(--clr-text-secondary);
+    line-height: 1.6;
+}
+
+/* Engage */
+.engage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-xl);
+    margin-top: var(--sp-2xl);
+}
+
+.engage-card {
+    padding: var(--sp-xl);
+    text-align: center;
+}
+
+.engage-card .step-num {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-2xl);
+    font-weight: 800;
+    color: var(--clr-accent-light);
+    margin-bottom: var(--sp-sm);
+}
+
+.engage-card h4 {
+    font-size: var(--fs-lg);
+    margin-bottom: var(--sp-sm);
+}
+
+.engage-card p {
+    font-size: var(--fs-sm);
+    color: var(--clr-text-secondary);
+    line-height: 1.7;
+}
+
+/* Product pricing */
+.product-pricing {
+    background: var(--clr-bg-secondary);
+}
+
+.product-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-xl);
+    margin-top: var(--sp-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product-price-card {
+    padding: var(--sp-2xl);
+    text-align: center;
+}
+
+.product-price-card h3 {
+    font-size: var(--fs-xl);
+    margin-bottom: var(--sp-sm);
+}
+
+.product-price-card .price-tag {
+    font-family: var(--ff-heading);
+    font-size: var(--fs-2xl);
+    font-weight: 800;
+    color: var(--clr-green);
+    margin-bottom: var(--sp-md);
+}
+
+.product-price-card .price-tag span {
+    font-size: var(--fs-sm);
+    color: var(--clr-text-muted);
+    font-weight: 400;
+}
+
+.product-price-card p {
+    font-size: var(--fs-sm);
+    color: var(--clr-text-secondary);
+    margin-bottom: var(--sp-lg);
+    line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .screenshots-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .features-grid,
+    .engage-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-pricing-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "portfolio-ts",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "preact": "^10.29.8",
+    "framer-motion": "^12.34.2",
+    "lucide-react": "^0.575.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.13.0",
+    "recharts": "^3.8.1",
+    "yet-another-react-lightbox": "^3.31.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.6",
+    "@types/node": "^24.13.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}
