@@ -14,7 +14,7 @@ const fadeUp = {
 
 export default function Services() {
     const { t: translate } = useLang();
-    const t = translate('services');
+    const t: any = translate('services');
 
     return (
         <>

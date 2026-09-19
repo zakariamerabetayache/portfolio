@@ -29,7 +29,7 @@ export default function Contact() {
     const tf: any = tc.form;
 
     const [form, setForm] = useState(initialFormState);
-    const [errors, setErrors] = useState<errorsType | undefined>({});
+    const [errors, setErrors] = useState<errorsType | undefined>(undefined);
     const [status, setStatus] = useState<statusType>('idle');
 
     const channels = [

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-    ArrowRight, Users, FileText, Shield, Download, Settings,
-    Bell, BarChart3, Lock, CheckCircle
+    ArrowRight, Users, FileText, Shield, Download,
+    Bell, Lock, CheckCircle
 } from 'lucide-react';
 import './Products.css';
 

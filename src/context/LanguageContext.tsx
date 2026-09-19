@@ -7,7 +7,7 @@ type LanguageContextType = {
   toggleLang: () => void;
   changeLanguage: (newLang: language) => void;
   translate: (key: string) => string;
-  t: (key: string) => string;
+  t: (key: string) => any;
   isRTL: boolean;
 }
 
@@ -24,8 +24,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
 
 
-  const [lang, setLang] = useState(() => {
-    return localStorage.getItem('portfolio-lang') || 'en';
+  const [lang, setLang] = useState<language>(() => {
+    return localStorage.getItem('portfolio-lang') as language || 'en';
   });
 
   const changeLanguage = (newLang: language) => {
@@ -40,10 +40,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       const keys = key.split('.');
       let current = translations[lang];
       for (const k of keys) {
-        if (current === undefined) break;
-        current = current[k];
-      }
+        if (
+          current === undefined ||
+          current === null ||
+          typeof current !== 'object' ||
+          !(k in current)
+        ) {
+          current = undefined;
+          break;
+        }
 
+        current = (current as Record<string, unknown>)[k];
+      }
       if (current !== undefined) return current;
 
       // Fallback to English

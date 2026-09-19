@@ -10,13 +10,13 @@ import './Work.css';
 
 export default function Work() {
     const { t: translate } = useLang();
-    const t = translate('work');
+    const t: any = translate('work');
 
     const [lightboxOpen, setLightboxOpen] = useState(false);
     const [lightboxSlides, setLightboxSlides] = useState([]);
     const [lightboxIndex, setLightboxIndex] = useState(0);
 
-    const openLightbox = (images, index) => {
+    const openLightbox = (images: any[], index: number) => {
         setLightboxSlides(images.map(src => ({ src })));
         setLightboxIndex(index);
         setLightboxOpen(true);

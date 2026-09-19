@@ -50,7 +50,10 @@ export default function About() {
                         </p>
                     </div>
                     <div className="skills-grid">
-                        {t.skills.map((s, i) => (
+                        {t.skills.map((s: {
+                            group: string,
+                            items: string[]
+                        }, i: number) => (
                             <motion.div
                                 className="skill-group"
                                 key={s.group}
@@ -61,7 +64,7 @@ export default function About() {
                             >
                                 <h4>{s.group}</h4>
                                 <div className="skill-tags">
-                                    {s.items.map(item => (
+                                    {s.items.map((item: string) => (
                                         <span className="skill-tag" key={item}>{item}</span>
                                     ))}
                                 </div>

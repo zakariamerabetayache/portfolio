@@ -1,13 +1,46 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, ExternalLink, CheckCircle, Download } from 'lucide-react';
+import { motion, type Variants } from 'framer-motion';
+import { ArrowRight, Download } from 'lucide-react';
 import cvFile from '../assets/Zakaria_Merabet_Ayache_ATS_CV_DEV.pdf';
 import { useLang } from '../context/LanguageContext';
 import './Home.css';
 
-const fadeUp = {
+// type TService = {
+//     title: string;
+//     desc: string;
+//     icon: string;
+// };
+
+// type TTrustBarItem = {
+//     number: string;
+//     label: string;
+// };
+
+// type TTransHome = {
+//     badge: string;
+//     heroH1: string;
+//     heroDesc: string;
+//     trustMicro: string;
+//     ctaPrimary: string;
+//     ctaSecondary: string;
+//     trustBar: TTrustBarItem[];
+//     servicesLabel: string;
+//     servicesTitle: string;
+//     servicesSubtitle: string;
+//     services: TService[];
+//     viewAllServices: string;
+//     productLabel: string;
+//     productTitle: string;
+//     productSubtitle: string;
+//     featuredProject: string;
+//     viewProject: string;
+//     ctaFinal: string;
+// };
+
+
+const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: (i = 0) => ({
+    visible: (i: number = 0) => ({
         opacity: 1,
         y: 0,
         transition: { delay: i * 0.12, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
@@ -16,7 +49,7 @@ const fadeUp = {
 
 export default function Home() {
     const { t: translate } = useLang();
-    const t = translate('home');
+    const t: any = translate('home');
 
     return (
         <>
@@ -61,11 +94,11 @@ export default function Home() {
                             <img src="/img/pesonelimage.jpg" alt="Merabet Ayache Zakaria" />
                         </div>
                     </motion.div>
-                </div>
-            </section>
+                </div >
+            </section >
 
             {/* ===== TRUST BAR ===== */}
-            <section className="trust-bar">
+            < section className="trust-bar" >
                 <div className="container trust-bar-inner">
                     {t.trustBar.map((item, i) => (
                         <motion.div
@@ -81,10 +114,10 @@ export default function Home() {
                         </motion.div>
                     ))}
                 </div>
-            </section>
+            </section >
 
             {/* ===== SERVICES PREVIEW ===== */}
-            <section className="section services-preview">
+            < section className="section services-preview" >
                 <div className="container">
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }}>
                         <motion.span className="section-label" variants={fadeUp}>{t.servicesLabel}</motion.span>
@@ -119,7 +152,7 @@ export default function Home() {
                         </Link>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* ===== PRODUCT HIGHLIGHT ===== */}
             {/* <section className="section product-highlight">
