@@ -3,34 +3,31 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Phone, MessageCircle, Clock, Globe, ArrowUpRight, Send, CheckCircle, AlertTriangle, Loader2, User, AtSign, PhoneCall, FileText, MessageSquare } from 'lucide-react';
 import { useLang } from '../context/LanguageContext';
 import './Contact.css';
-import type { ReactNode } from 'react';
+import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 
 const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number = 0) => ({
         opacity: 1,
         y: 0,
-        transition: { delay: i * 0.12, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] },
+        transition: { delay: i * 0.12, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
     }),
 };
 
 const initialFormState = { name: '', email: '', phone: '', subject: '', message: '' };
 
-export default function Contact() {
+type FormField = keyof typeof initialFormState;
+type ErrorsType = Partial<Record<FormField, string>>;
+type StatusType = 'idle' | 'submitting' | 'success' | 'error';
 
-    type errorsType = {
-        name?: string;
-        email?: string;
-        message?: string;
-    };
-    type statusType = 'idle' | 'submitting' | 'success' | 'error'
+export default function Contact() {
     const { t } = useLang();
     const tc: any = t('contact');
     const tf: any = tc.form;
 
     const [form, setForm] = useState(initialFormState);
-    const [errors, setErrors] = useState<errorsType | undefined>(undefined);
-    const [status, setStatus] = useState<statusType>('idle');
+    const [errors, setErrors] = useState<ErrorsType>({});
+    const [status, setStatus] = useState<StatusType>('idle');
 
     const channels = [
         {
@@ -74,9 +71,8 @@ export default function Contact() {
     ];
 
     /* ── Validation ── */
-    function validate() {
-
-        const errs: errorsType = {};
+    function validate(): ErrorsType {
+        const errs: ErrorsType = {};
         if (!form.name.trim()) errs.name = tf.validationRequired;
         if (!form.email.trim()) {
             errs.email = tf.validationRequired;
@@ -88,22 +84,25 @@ export default function Contact() {
     }
 
     /* ── Handle input ── */
-    function handleChange(e: any) {
+    function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const { name, value } = e.currentTarget;
+        const field = name as FormField;
 
-        const { name, value }: { name: string, value: string | number | undefined } = e.target;
-        setForm(prev => ({ ...prev, [name]: value }));
-        // Clear error on type
-        if (errors[name]) {
-            setErrors(prev => {
-                const copy = { ...prev };
-                delete copy[name];
-                return copy;
-            });
-        }
+        setForm(prev => ({
+            ...prev,
+            [field]: value,
+        }));
+
+        setErrors(prev => {
+            if (!prev[field]) return prev;
+            const copy = { ...prev };
+            delete copy[field];
+            return copy;
+        });
     }
 
     /* ── Submit ── */
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const errs = validate();
         if (Object.keys(errs).length > 0) {
@@ -115,7 +114,6 @@ export default function Contact() {
         setErrors({});
 
         try {
-
 
         } catch (err) {
 

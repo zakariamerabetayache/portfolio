@@ -38,7 +38,7 @@ export default function Services() {
                     </motion.div>
 
                     <div className="offerings-grid">
-                        {t.offerings.map((item, i) => (
+                        {t.offerings.map((item: any, i: number) => (
                             <motion.div
                                 className="glass-card offering-card"
                                 key={item.title}
@@ -77,7 +77,7 @@ export default function Services() {
                         </p>
                     </div>
                     <div className="process-steps">
-                        {t.process.map((s, i) => (
+                        {t.process.map((s: any, i: number) => (
                             <motion.div
                                 className="glass-card process-step"
                                 key={s.num}
@@ -103,7 +103,7 @@ export default function Services() {
                         <h2 className="section-title">{t.faqTitle}</h2>
                     </div>
                     <div className="faq-grid">
-                        {t.faqs.map((f, i) => (
+                        {t.faqs.map((f: any, i: number) => (
                             <motion.div
                                 className="glass-card faq-item"
                                 key={i}

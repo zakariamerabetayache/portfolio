@@ -100,7 +100,7 @@ export default function Home() {
             {/* ===== TRUST BAR ===== */}
             < section className="trust-bar" >
                 <div className="container trust-bar-inner">
-                    {t.trustBar.map((item, i) => (
+                    {t.trustBar.map((item: any, i: number) => (
                         <motion.div
                             className="trust-item"
                             key={item.label}
@@ -130,7 +130,7 @@ export default function Home() {
                     </motion.div>
 
                     <div className="services-grid">
-                        {t.services.map((s, i) => (
+                        {t.services.map((s: any, i: number) => (
                             <motion.div
                                 className="glass-card service-card"
                                 key={s.title}
@@ -224,7 +224,7 @@ export default function Home() {
                     </motion.div>
 
                     <div className="featured-grid">
-                        {t.projects.map((p, i) => (
+                        {t.projects.map((p: any, i: number) => (
                             <motion.div
                                 key={p.title}
                                 initial={{ opacity: 0, y: 30 }}

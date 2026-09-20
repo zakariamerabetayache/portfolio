@@ -13,11 +13,11 @@ export default function Work() {
     const t: any = translate('work');
 
     const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [lightboxSlides, setLightboxSlides] = useState([]);
+    const [lightboxSlides, setLightboxSlides] = useState<{ src: string }[]>([]);
     const [lightboxIndex, setLightboxIndex] = useState(0);
 
-    const openLightbox = (images: any[], index: number) => {
-        setLightboxSlides(images.map(src => ({ src })));
+    const openLightbox = (images: string[], index: number) => {
+        setLightboxSlides(images.map((src) => ({ src })));
         setLightboxIndex(index);
         setLightboxOpen(true);
     };
@@ -37,7 +37,7 @@ export default function Work() {
             </section>
 
             {/* Case studies */}
-            {t.caseStudies.map((cs, i) => (
+            {t.caseStudies.map((cs: any) => (
                 <section className="section case-study" key={cs.title}>
                     <div className="container">
                         <motion.div
@@ -48,7 +48,7 @@ export default function Work() {
                             transition={{ duration: 0.6 }}
                         >
                             <div className="case-study-images">
-                                {cs.images.slice(0, 3).map((img, j) => {
+                                {cs.images.slice(0, 3).map((img: any, j: number) => {
                                     const isLastVisible = j === 2;
                                     const remainingCount = cs.images.length - 3;
 
@@ -116,7 +116,7 @@ export default function Work() {
                                 </div>
 
                                 <div className="tech-bar">
-                                    {cs.tags.map(tag => (
+                                    {cs.tags.map((tag: any) => (
                                         <span className="tech-tag" key={tag}>{tag}</span>
                                     ))}
                                 </div>

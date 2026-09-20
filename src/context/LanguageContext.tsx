@@ -38,7 +38,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const translate = (key: string) => {
     try {
       const keys = key.split('.');
-      let current = translations[lang];
+      let current: any = translations[lang];
       for (const k of keys) {
         if (
           current === undefined ||
@@ -55,7 +55,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       if (current !== undefined) return current;
 
       // Fallback to English
-      let fallback = translations.en;
+      let fallback: any = translations.en;
       for (const k of keys) {
         if (fallback === undefined) break;
         fallback = fallback[k];
