@@ -8,7 +8,7 @@ const navLinks = {
   en: [
     { path: '/', label: 'Home' },
     { path: '/services', label: 'Services' },
-    // { path: '/products', label: 'Products' },
+    { path: '/products', label: 'Products' },
     { path: '/work', label: 'Work' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
@@ -16,7 +16,7 @@ const navLinks = {
   ar: [
     { path: '/', label: 'الرئيسية' },
     { path: '/services', label: 'الخدمات' },
-    // { path: '/products', label: 'المنتجات' },
+    { path: '/products', label: 'المنتجات' },
     { path: '/work', label: 'الأعمال' },
     { path: '/about', label: 'حولي' },
     { path: '/contact', label: 'تواصل' },

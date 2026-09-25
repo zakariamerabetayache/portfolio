@@ -1,212 +1,372 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-    ArrowRight, Users, FileText, Shield, Download,
-    Bell, Lock, CheckCircle
+import { 
+    Github, ExternalLink, ArrowRight, Layers, ShieldCheck, 
+    Terminal, GitBranch, Database, Cpu, ZoomIn, CheckCircle2, 
+    AlertTriangle, Sparkles, Workflow, Globe2
 } from 'lucide-react';
+import { useLang } from '../context/LanguageContext';
+import Lightbox from 'yet-another-react-lightbox';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import 'yet-another-react-lightbox/styles.css';
 import './Products.css';
 
-const screenshots = [
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.22 (1).jpeg', caption: 'Dashboard Overview' },
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.22 (2).jpeg', caption: 'Registration Form' },
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.22 (3).jpeg', caption: 'Member Management' },
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.22.jpeg', caption: 'Admin Panel' },
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.23 (1).jpeg', caption: 'Reports View' },
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.23 (2).jpeg', caption: 'Settings & Config' },
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.23 (3).jpeg', caption: 'Data Export' },
-    { src: '/img/WhatsApp Image 2026-02-09 at 07.20.23.jpeg', caption: 'User Roles' },
-];
-
-const features = [
-    { icon: <Users size={22} />, title: 'Member Registration', desc: 'Online forms with validation, file upload, and consent tracking.' },
-    { icon: <FileText size={22} />, title: 'Event Sign-ups', desc: 'Create events, manage RSVPs, and track attendance in one place.' },
-    { icon: <Shield size={22} />, title: 'Role-based Access', desc: 'Regional admins, coordinators, and viewers — each with scoped permissions.' },
-    { icon: <Download size={22} />, title: 'CSV / PDF Export', desc: 'Export member lists, reports, and analytics for outreach or compliance.' },
-    { icon: <Bell size={22} />, title: 'Notifications', desc: 'SMS and email notifications for new sign-ups, events, and reminders.' },
-    { icon: <Lock size={22} />, title: 'Security & Consent', desc: 'Audit-friendly design with consent tracking and data protection built in.' },
-];
-
 export default function Products() {
+    const { t: translate } = useLang();
+    const t: any = translate('products');
+
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
+
+    const screenshots = t.screenshots || [];
+    const lightboxSlides = screenshots.map((s: any) => ({ src: s.src }));
+
+    const openLightbox = (index: number) => {
+        setLightboxIndex(index);
+        setLightboxOpen(true);
+    };
+
     return (
-        <>
-            {/* Hero */}
-            <section className="products-hero section">
+        <div className="product-page">
+            {/* HERO SECTION */}
+            <section className="product-hero section">
                 <div className="container">
-                    <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                        Registration App
-                    </motion.h1>
-                    <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                        A ready-made registration system for events, political parties, organizations.
-                        Get up and running in 48 hours.
-                    </motion.p>
-                    <motion.div
-                        className="products-hero-actions"
-                        initial={{ opacity: 0, y: 20 }}
+                    <motion.div 
+                        className="product-hero-inner"
+                        initial={{ opacity: 0, y: 24 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
+                        transition={{ duration: 0.6 }}
                     >
-                        <Link to="/contact" className="btn btn-primary">
-                            Request Demo <ArrowRight size={16} />
-                        </Link>
-                        <Link to="/contact" className="btn btn-secondary">
-                            Buy Now
-                        </Link>
+                        <div className="product-badge">
+                            <Sparkles size={14} />
+                            <span>{t.heroLabel}</span>
+                        </div>
+                        <h1 className="product-hero-title">{t.heroTitle}</h1>
+                        <p className="product-hero-subtitle">{t.heroSubtitle}</p>
+
+                        <div className="product-hero-actions">
+                            <a 
+                                href={t.githubUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn-product-github"
+                            >
+                                <Github size={18} />
+                                <span>{t.githubBtn}</span>
+                                <ExternalLink size={14} />
+                            </a>
+                            <Link to="/contact" className="btn btn-secondary product-contact-btn">
+                                <span>{t.discussBtn}</span>
+                                <ArrowRight size={16} />
+                            </Link>
+                        </div>
+
+                        {/* META CHIPS */}
+                        {t.metaChips && t.metaChips.length > 0 && (
+                            <div className="product-meta-row">
+                                {t.metaChips.map((chip: any, i: number) => (
+                                    <div className="product-meta-chip" key={i}>
+                                        <span className="product-chip-label">{chip.label}</span>
+                                        <span className="product-chip-value">{chip.value}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </motion.div>
                 </div>
             </section>
 
-            {/* Screenshots */}
-            <section className="section">
-                <div className="container">
-                    <div style={{ textAlign: 'center' }}>
-                        <span className="section-label">App Preview</span>
-                        <h2 className="section-title">See It in Action</h2>
+            {/* ORIGIN & PHILOSOPHY */}
+            {t.philosophyQuote && (
+                <section className="section product-philosophy-section">
+                    <div className="container">
+                        <motion.div 
+                            className="glass-card product-philosophy-card"
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <div className="philosophy-header">
+                                <div className="section-pill">
+                                    <Layers size={14} />
+                                    <span>{t.philosophyLabel}</span>
+                                </div>
+                                <h2 className="philosophy-title">{t.philosophyTitle}</h2>
+                            </div>
+                            <blockquote className="philosophy-quote-body">
+                                {t.philosophyQuote.split('\n\n').map((paragraph: string, idx: number) => (
+                                    <p key={idx}>{paragraph}</p>
+                                ))}
+                            </blockquote>
+                        </motion.div>
                     </div>
-                    <div className="screenshots-grid">
-                        {screenshots.map((s, i) => (
-                            <motion.div
-                                className="screenshot-item"
+                </section>
+            )}
+
+            {/* PROBLEM VS SOLUTION (TWO-COL) */}
+            <section className="section product-comparison-section">
+                <div className="container">
+                    <div className="product-comparison-grid">
+                        {/* Problems */}
+                        <motion.div 
+                            className="glass-card comparison-card problem-card"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <div className="comparison-header">
+                                <div className="comparison-icon icon-danger">
+                                    <AlertTriangle size={20} />
+                                </div>
+                                <div>
+                                    <h3 className="comparison-title">{t.problemTitle}</h3>
+                                    <p className="comparison-desc">{t.problemDesc}</p>
+                                </div>
+                            </div>
+                            <div className="comparison-list">
+                                {t.problemItems && t.problemItems.map((item: any, i: number) => (
+                                    <div className="comparison-item" key={i}>
+                                        <span className="item-bullet bullet-red" />
+                                        <div>
+                                            <div className="item-title">{item.title}</div>
+                                            <div className="item-desc">{item.desc}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+
+                        {/* Solutions */}
+                        <motion.div 
+                            className="glass-card comparison-card solution-card"
+                            initial={{ opacity: 0, x: 20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                        >
+                            <div className="comparison-header">
+                                <div className="comparison-icon icon-success">
+                                    <ShieldCheck size={20} />
+                                </div>
+                                <div>
+                                    <h3 className="comparison-title">{t.solutionTitle}</h3>
+                                    <p className="comparison-desc">{t.solutionDesc}</p>
+                                </div>
+                            </div>
+                            <div className="comparison-list">
+                                {t.solutionItems && t.solutionItems.map((item: any, i: number) => (
+                                    <div className="comparison-item" key={i}>
+                                        <span className="item-bullet bullet-green" />
+                                        <div>
+                                            <div className="item-title">{item.title}</div>
+                                            <div className="item-desc">{item.desc}</div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* TECHNICAL CAPABILITIES & SPECS */}
+            <section className="section product-specs-section">
+                <div className="container">
+                    <div className="section-head-center">
+                        <div className="section-pill">
+                            <GitBranch size={14} />
+                            <span>{t.specsLabel}</span>
+                        </div>
+                        <h2 className="section-title">{t.specsTitle}</h2>
+                        <p className="section-subtitle">{t.specsSubtitle}</p>
+                    </div>
+
+                    <div className="specs-grid">
+                        {t.specs && t.specs.map((spec: any, i: number) => (
+                            <motion.div 
+                                className="glass-card spec-card"
                                 key={i}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.08 }}
+                                transition={{ duration: 0.45, delay: i * 0.08 }}
                             >
-                                <img src={s.src} alt={s.caption} />
-                                <p>{s.caption}</p>
+                                <div className="spec-tag">{spec.tag}</div>
+                                <h3 className="spec-title">{spec.title}</h3>
+                                <p className="spec-desc">{spec.desc}</p>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Features */}
-            <section className="section features-section">
+            {/* ARCHITECTURE PIPELINE */}
+            <section className="section product-arch-section">
                 <div className="container">
-                    <div style={{ textAlign: 'center' }}>
-                        <span className="section-label">Features</span>
-                        <h2 className="section-title">Everything You Need</h2>
-                        <p className="section-subtitle" style={{ margin: '0 auto' }}>
-                            Built for organizations that need secure, scalable member management.
+                    <div className="section-head-center">
+                        <div className="section-pill">
+                            <Workflow size={14} />
+                            <span>System Architecture</span>
+                        </div>
+                        <h2 className="section-title">Decoupled Three-Tier Topology</h2>
+                        <p className="section-subtitle">
+                            Single-Page App frontend communicating with a stateless Laravel REST API over secure Sanctum sessions.
                         </p>
                     </div>
-                    <div className="features-grid">
-                        {features.map((f, i) => (
-                            <motion.div
-                                className="glass-card feature-card"
-                                key={f.title}
+
+                    <div className="arch-flow-grid">
+                        <motion.div className="glass-card arch-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                            <div className="arch-card-icon"><Globe2 size={24} /></div>
+                            <h4>1. Client Presentation (React 18)</h4>
+                            <ul>
+                                <li>Multi-Step Wizard with live field validation</li>
+                                <li>Runtime CSS Variable Theme Injection</li>
+                                <li>Ant Design RTL ConfigProvider for Arabic</li>
+                                <li>Stateless Axios client with bearer tokens</li>
+                            </ul>
+                        </motion.div>
+
+                        <motion.div className="glass-card arch-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+                            <div className="arch-card-icon"><Cpu size={24} /></div>
+                            <h4>2. API & Security Layer (Laravel 10)</h4>
+                            <ul>
+                                <li>NIN Uniqueness & Pre-flight Middleware</li>
+                                <li>Sanctum Stateful / Token Authentication</li>
+                                <li>Wilaya / Commune Jurisdiction Query Scoping</li>
+                                <li>Referral Token Generation & Leaderboards</li>
+                            </ul>
+                        </motion.div>
+
+                        <motion.div className="glass-card arch-card" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
+                            <div className="arch-card-icon"><Database size={24} /></div>
+                            <h4>3. Persistent Storage (MySQL 8)</h4>
+                            <ul>
+                                <li>party_members table with unique NIN index</li>
+                                <li>wilayas & communes normalized geo hierarchy</li>
+                                <li>etablissements multi-tenant branding settings</li>
+                                <li>Optimized indexes for regional filtering</li>
+                            </ul>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* SCREENSHOTS / WORKFLOW GALLERY */}
+            <section className="section product-screenshots-section">
+                <div className="container">
+                    <div className="section-head-center">
+                        <div className="section-pill">
+                            <Terminal size={14} />
+                            <span>{t.screenshotsLabel}</span>
+                        </div>
+                        <h2 className="section-title">{t.screenshotsTitle}</h2>
+                        <p className="section-subtitle">{t.screenshotsSubtitle}</p>
+                    </div>
+
+                    <div className="product-screenshots-grid">
+                        {screenshots.map((s: any, i: number) => (
+                            <motion.div 
+                                className="product-screenshot-item"
+                                key={i}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
+                                transition={{ duration: 0.4, delay: i * 0.06 }}
+                                onClick={() => openLightbox(i)}
                             >
-                                <div className="feature-card-icon">{f.icon}</div>
-                                <h4>{f.title}</h4>
-                                <p>{f.desc}</p>
+                                <div className="screenshot-media-wrap">
+                                    <img src={s.src} alt={s.title} loading="lazy" />
+                                    <div className="screenshot-zoom-overlay">
+                                        <ZoomIn size={20} />
+                                    </div>
+                                </div>
+                                <div className="screenshot-info">
+                                    <h4>{s.title}</h4>
+                                    <p>{s.caption}</p>
+                                </div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* 3 Ways to Engage */}
-            <section className="section">
+            {/* TECH STACK SECTION */}
+            <section className="section product-techstack-section">
                 <div className="container">
-                    <div style={{ textAlign: 'center' }}>
-                        <span className="section-label">Options</span>
-                        <h2 className="section-title">3 Ways to Get Started</h2>
+                    <div className="section-head-center">
+                        <div className="section-pill">
+                            <Terminal size={14} />
+                            <span>{t.techStackLabel}</span>
+                        </div>
+                        <h2 className="section-title">{t.techStackTitle}</h2>
                     </div>
-                    <div className="engage-grid">
-                        {[
-                            { num: '1', title: 'Buy As-Is', desc: 'Purchase the product ready to go. No dev time needed. Install, configure, launch.' },
-                            { num: '2', title: 'Product + Customization', desc: "Get the product and I'll add branding, custom forms, CRM integration — fast and affordable." },
-                            { num: '3', title: 'Fully Custom Build', desc: "Need something unique? I'll build a tailored solution from scratch with the same technical foundation." },
-                        ].map((e, i) => (
-                            <motion.div
-                                className="glass-card engage-card"
-                                key={e.num}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.12 }}
+
+                    <div className="tech-stack-groups">
+                        {t.techStackItems && t.techStackItems.map((group: any, i: number) => (
+                            <div className="tech-group-card glass-card" key={i}>
+                                <h4 className="tech-group-title">{group.category}</h4>
+                                <div className="tech-pills-wrap">
+                                    {group.items.map((item: string, j: number) => (
+                                        <span className="tech-pill" key={j}>
+                                            <CheckCircle2 size={13} />
+                                            {item}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* CALL TO ACTION */}
+            <section className="section product-cta-section">
+                <div className="container">
+                    <motion.div 
+                        className="glass-card product-cta-card"
+                        initial={{ opacity: 0, y: 24 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <div className="cta-github-icon-wrap">
+                            <Github size={36} />
+                        </div>
+                        <h2>{t.ctaTitle}</h2>
+                        <p>{t.ctaDesc}</p>
+                        <div className="product-cta-actions">
+                            <a 
+                                href={t.githubUrl} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="btn btn-primary btn-cta-github"
                             >
-                                <div className="step-num">{e.num}</div>
-                                <h4>{e.title}</h4>
-                                <p>{e.desc}</p>
-                            </motion.div>
-                        ))}
-                    </div>
+                                <Github size={18} />
+                                <span>{t.ctaGithubBtn}</span>
+                                <ExternalLink size={15} />
+                            </a>
+                            <Link to="/contact" className="btn btn-secondary">
+                                <span>{t.ctaContactBtn}</span>
+                                <ArrowRight size={16} />
+                            </Link>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Pricing */}
-            <section className="section product-pricing">
-                <div className="container">
-                    <div style={{ textAlign: 'center' }}>
-                        <span className="section-label">Pricing</span>
-                        <h2 className="section-title">Simple, Transparent Pricing</h2>
-                    </div>
-                    <div className="product-pricing-grid">
-                        <motion.div
-                            className="glass-card product-price-card"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                        >
-                            <h3>SaaS Monthly</h3>
-                            <div className="price-tag">$49<span>/month</span></div>
-                            <p>Hosted solution with automatic updates, backups, and support. Cancel anytime.</p>
-                            <Link to="/contact" className="btn btn-primary">Start Free Trial</Link>
-                        </motion.div>
-                        <motion.div
-                            className="glass-card product-price-card"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.1 }}
-                        >
-                            <h3>One-Time License</h3>
-                            <div className="price-tag">$499<span> one-time</span></div>
-                            <p>Self-hosted white-label license. Full source code, deploy on your server. Setup fee included.</p>
-                            <Link to="/contact" className="btn btn-secondary">Get License</Link>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-
-            {/* Customizations */}
-            <section className="section">
-                <div className="container" style={{ textAlign: 'center' }}>
-                    <span className="section-label">Add-ons</span>
-                    <h2 className="section-title">Common Customizations</h2>
-                    <p className="section-subtitle" style={{ margin: '0 auto var(--sp-2xl)' }}>
-                        Many product customers add these popular upgrades.
-                    </p>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.75rem' }}>
-                        {[
-                            'Custom Branding', 'Custom Forms', 'CRM Integration', 'Payment Gateway',
-                            'SMS Notifications', 'Multi-language', 'Advanced Reporting', 'API Access'
-                        ].map(tag => (
-                            <span className="product-feature-tag" key={tag} style={{
-                                padding: '0.5rem 1rem',
-                                background: 'var(--clr-accent-glow)',
-                                border: '1px solid rgba(108,92,231,0.15)',
-                                borderRadius: 'var(--radius-full)',
-                                fontSize: 'var(--fs-sm)',
-                                fontWeight: 500,
-                                color: 'var(--clr-accent-light)',
-                            }}>
-                                <CheckCircle size={14} /> {tag}
-                            </span>
-                        ))}
-                    </div>
-                    <div style={{ marginTop: 'var(--sp-2xl)' }}>
-                        <Link to="/contact" className="btn btn-primary">
-                            Request Customization <ArrowRight size={16} />
-                        </Link>
-                    </div>
-                </div>
-            </section>
-        </>
+            {/* LIGHTBOX */}
+            <Lightbox
+                open={lightboxOpen}
+                close={() => setLightboxOpen(false)}
+                index={lightboxIndex}
+                slides={lightboxSlides}
+                plugins={[Zoom]}
+                zoom={{ maxZoomPixelRatio: 4, scrollToZoom: true }}
+                styles={{ container: { backgroundColor: 'rgba(5, 5, 10, 0.94)' } }}
+            />
+        </div>
     );
 }
