@@ -18,8 +18,8 @@ export default {
         ctaSecondary: 'Download CV',
         trustBar: [
             // { number: '4+', label: 'Delivered Apps' },
-            { number: '1.5+', label: 'Years Freelance Experience' },
-            { number: '2', label: 'Personal Projects' },
+            { number: '2+', label: 'Years Freelance Experience' },
+            { number: '4', label: 'Personal Projects' },
             { number: '< 24h', label: 'Avg. Response Time' },
         ],
         servicesLabel: 'Services',

@@ -5,6 +5,9 @@ import { useLang } from '../context/LanguageContext';
 import './Contact.css';
 import type { ReactNode, ChangeEvent, FormEvent } from 'react';
 
+import emailjs from '@emailjs/browser';
+
+
 const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: (i: number = 0) => ({
@@ -114,11 +117,31 @@ export default function Contact() {
         setErrors({});
 
         try {
+            const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+            const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+            const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-        } catch (err) {
-
+            if (serviceId && templateId && publicKey) {
+                await emailjs.send(serviceId, templateId, {
+                    name: form.name.trim(),
+                    email: form.email.trim(),
+                    phone: form.phone.trim() || 'N/A',
+                    subject: form.subject.trim() || 'No subject',
+                    message: form.message.trim(),
+                    time: new Date().toLocaleString(),
+                }, publicKey);
+            }
+            setStatus('success');
+            setForm(initialFormState);
+        } catch {
+            // EmailJS failure is non-critical — data is already in Supabase
+            console.warn('EmailJS notification failed, but message was saved to database.');
         }
+
+
     }
+
+
 
     /* ── Reset after success/error ── */
     function resetForm() {

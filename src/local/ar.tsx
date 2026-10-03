@@ -18,8 +18,8 @@ export default {
         ctaSecondary: 'تحميل السيرة الذاتية',
         trustBar: [
             // { number: '+4', label: 'تطبيقات مُسلّمة' },
-            { number: '+1.5', label: 'سنوات خبرة عمل حر' },
-            { number: '2', label: 'مشاريع شخصية' },
+            { number: '+2', label: 'سنوات خبرة عمل حر' },
+            { number: '4', label: 'مشاريع شخصية' },
             { number: 'أقل من 24 سا', label: 'متوسط وقت الرد' },
         ],
         servicesLabel: 'الخدمات',
